@@ -1,0 +1,16 @@
+{
+  "customer_data.csv": {
+    "headers": ["customer_code", "account_type", "customer_name", "salesperson", "suburb", "state", "postcode", "customer_group", "customer_type", "customer_ranking", "email", "phone"],
+    "notes": "Contains customer profile information for linking with sales data in RFM analysis."
+  },
+  "sales_data.csv": {
+    "headers": ["transaction_number", "date", "branch", "cost", "customer_code", "amount", "profit", "delivery_suburb", "salesperson", "postcode", "transaction_type"],
+    "key_metrics": {
+      "amount": "Total sale per transaction",
+      "salesperson": "Salesperson who owns the customer",
+      "branch": "Branch location where sale was made",
+      "profit": "Profit made on the transaction"
+    },
+    "notes": "Primary data source for RFM calculations, with key metrics highlighted for analysis focus."
+  }
+}

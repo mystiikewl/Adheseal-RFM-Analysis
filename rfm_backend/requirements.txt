@@ -1,0 +1,6 @@
+# Requirements for Adheseal RFM Analysis Dashboard Backend
+fastapi==0.92.0
+uvicorn==0.20.0
+pandas==1.5.3
+pydantic==1.10.5
+python-dotenv==1.0.0

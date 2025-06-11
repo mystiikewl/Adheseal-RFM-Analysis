@@ -1,0 +1,41 @@
+{
+  "mcpServers": {
+    "github.com/modelcontextprotocol/servers/tree/main/src/filesystem": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\User\\Documents\\Cline\\MCP\\filesystem-server\\dist\\index.js",
+        "c:/Users/User/OneDrive - Adheseal Pty Ltd/Projects/Inventory Dashboard"
+      ],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "github.com/modelcontextprotocol/servers/tree/main/src/memory": {
+      "command": "node",
+      "args": [
+        "c:/Users/User/OneDrive - Adheseal Pty Ltd/Projects/Inventory Dashboard/mcp-servers/memory/node_modules/@modelcontextprotocol/server-memory/dist/index.js"
+      ],
+      "env": {
+        "MEMORY_FILE_PATH": "c:/Users/User/OneDrive - Adheseal Pty Ltd/Projects/Inventory Dashboard/mcp-servers/memory/memory.json"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "create_entities",
+        "create_relations",
+        "search_nodes",
+        "open_nodes"
+      ]
+    },
+    "github.com/supermemoryai/supermemory-mcp": {
+      "command": "node",
+      "args": [
+        "C:\\Users\\User\\Documents\\Cline\\MCP\\supermemory-mcp\\build\\server\\index.js"
+      ],
+      "env": {
+        "SUPERMEMORY_API_KEY": "sm_iHYQb2pBcEtNnhNKxZET5M_taQTvAZtuvzmEQnqbRIfaPgKwKOtUrWEeHOYrWgkIEdQbrtZnguxuQybRJsuOJIb"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  },
+  "// Note": "Added this comment to force MCP client reload"
+}
