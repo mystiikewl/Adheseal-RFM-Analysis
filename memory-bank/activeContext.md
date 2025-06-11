@@ -1,29 +1,42 @@
-# Active Context: RFM Analysis Backend Completion
+# Active Context for Adheseal RFM Analysis Dashboard
 
-## Current Focus
+## Current Work Focus
 
-The backend for the RFM Analysis Dashboard is fully complete, and recent efforts have resolved connectivity issues between the backend and frontend. With CORS configuration updated and a script created to run both servers simultaneously, the project is now focused on frontend development to display RFM data and customer segments effectively.
+The primary focus was to resolve issues with Tailwind CSS styling not being applied correctly, particularly custom theme colors. Despite several attempts to reconfigure Tailwind CSS for Vite (including using the `@tailwindcss/vite` plugin and adjusting `postcss.config.js`), the styling problems persist.
 
-## Recent Changes & Decisions
+## Recent Changes
 
-- **Dynamic Filter Options:** Updated the `/api/filters` endpoint in `rfm_backend/app/api/endpoints.py` to dynamically populate filter options based on unique values from the dataset for fields such as "customer_group", "customer_type", "customer_ranking", and "state". This ensures that filter options reflect actual data attributes, enhancing user-driven segmentation.
-- **Resolved FutureWarnings:** Modified `rfm_service.py` to address Pandas `FutureWarning`s by using `.replace()` and `.astype(str)` for handling invalid postcodes, ensuring long-term maintainability.
-- **Refined RFM Metrics:** Adjusted the Recency calculation in `rfm_service.py` to use the earliest transaction date as the reference point for a comprehensive view of customer engagement. Ensured that higher scores are assigned for more recent activity (5 for most recent). Added logging for quintile cut-off values for Frequency, Monetary, and Recency metrics to improve transparency in scoring.
-- **CORS Configuration Update:** Updated the CORS middleware in `rfm_backend/app/main.py` to allow requests from any origin (`allow_origins=["*"]`), enabling network access and resolving connectivity issues between the frontend and backend.
-- **Startup Script Creation:** Created `start_project.bat` in the project root directory, a batch file that simultaneously starts the FastAPI backend and React frontend servers in separate terminal windows for streamlined development workflow.
+- **Tailwind Configuration Attempts**:
+  - Uninstalled `@tailwindcss/postcss`.
+  - Installed `@tailwindcss/vite`.
+  - Updated `vite.config.js` to use `@tailwindcss/vite`.
+  - Modified `src/index.css` to use `@import "tailwindcss";`.
+  - Adjusted `postcss.config.js` multiple times (commented out, set to minimal).
+- **Theme Implementation (Previous)**: Support for light and dark themes was previously implemented across major UI components.
+- **Styling Updates (Previous)**: Background, text, border, and interactive element colors were intended to align with the theme using Tailwind CSS classes.
+- **Layout Adjustments (Previous)**: Responsive design with a grid layout for KPI cards was implemented.
 
 ## Next Steps
 
-- **Frontend Development:** Continue the design and implementation of the frontend dashboard to display RFM data and customer segments, ensuring seamless integration with the backend API.
-- **Filter Functionality:** Develop backend logic to apply user-selected filters from the frontend to dynamically adjust the RFM data returned by the API.
-- **Deployment Planning:** Outline a deployment strategy for both backend and frontend components, considering network access configurations.
-- **User Feedback:** Gather user feedback on the RFM metrics, segmentation, dashboard usability, and connectivity to ensure alignment with business objectives.
+- **Defer Tailwind CSS Troubleshooting**: The persistent Tailwind CSS styling issue (custom colors not applying, transparent dropdowns) will be addressed in a separate, dedicated task.
+- **User Feedback**: Await user feedback on the general dashboard functionality, separate from the styling issues.
+- **Additional Components**: If new components are added or existing ones modified, ensure they adhere to the theme guidelines in `styleGuide.md`.
+- **Testing**: Verify that the theme toggle works seamlessly across all components and that accessibility standards (WCAG AA) are maintained in both light and dark modes.
 
-## Key Learnings & Patterns
+## Active Decisions and Considerations
 
-- **FastAPI Endpoint Updates:** Dynamically populating API responses based on dataset attributes requires careful handling of data retrieval and unique value extraction to ensure performance and relevance.
-- **Pandas Compatibility:** Addressing `FutureWarning`s in Pandas involves using explicit type casting or updated methods like `.replace()` to maintain compatibility with future library versions.
-- **RFM Calculation Logic:** Using the earliest transaction date for Recency calculation provides a more intuitive measure of customer engagement over time, with scoring adjusted to reflect business value (higher scores for more recent activity).
-- **Transparency in Scoring:** Logging quintile cut-off values for RFM metrics aids in debugging and provides clarity on how scores are assigned, which is valuable for business interpretation.
-- **CORS Configuration for Connectivity:** Configuring CORS to allow requests from any origin (`allow_origins=["*"]`) is a practical solution for enabling network access, though it should be revisited for security in production environments.
-- **Development Workflow Optimization:** Creating a batch script to launch both backend and frontend servers simultaneously streamlines the development process, reducing setup time and potential errors in starting servers individually.
+- **Theme Toggle Placement**: The theme toggle button is currently placed in the header of `DashboardPage.jsx`. Consider if a more persistent placement (e.g., in a settings menu) would be better for user access.
+- **Red Accent Usage**: Red is used sparingly for interactive elements to avoid visual overload. Monitor user feedback to ensure it effectively draws attention without being distracting.
+- **Performance**: Ensure that theme switching does not impact application performance, especially with larger datasets in `DataTable`.
+
+## Important Patterns and Preferences
+
+- **Theme-Aware Styling**: Always use `dark:` classes alongside light theme classes to support both modes (e.g., `bg-neutral-background-light dark:bg-neutral-background-dark`).
+- **Accessibility Focus**: Maintain high contrast ratios and visible focus indicators using red accents for all interactive elements.
+- **Consistency**: Follow the color palette and spacing system defined in `styleGuide.md` for any new or updated components.
+
+## Learnings and Project Insights
+
+- **Tailwind CSS Flexibility**: Tailwind's utility-first approach allowed for rapid implementation of theme-aware styling with minimal custom CSS.
+- **Zustand for State Management**: Using Zustand to manage theme state proved effective for sharing the theme preference across components without complex prop drilling.
+- **User Experience**: The grid layout for KPI cards improves readability and visual hierarchy, especially on larger screens, aligning with modern dashboard design practices.
