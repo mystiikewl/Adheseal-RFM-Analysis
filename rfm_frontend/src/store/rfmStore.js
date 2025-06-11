@@ -3,16 +3,14 @@ import { create } from 'zustand'
 export const useRfmStore = create((set) => ({
   rfmData: [],
   filters: {
-    customer_group: '',
     customer_type: '',
-    customer_ranking: '',
-    state: ''
+    salesperson: '',
+    segment: ''
   },
   filterOptions: {
-    customer_group: [],
     customer_type: [],
-    customer_ranking: [],
-    state: []
+    salesperson: [],
+    segment: []
   },
   isLoading: false,
   error: null,

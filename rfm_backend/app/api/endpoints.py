@@ -54,10 +54,9 @@ async def get_filters():
         
         # Extract unique values for filter categories from the dataset
         filters = {
-            "customer_group": ["All"] + sorted(rfm_df['customer_group'].dropna().unique().tolist()),
             "customer_type": ["All"] + sorted(rfm_df['customer_type'].dropna().unique().tolist()),
-            "customer_ranking": ["All"] + sorted(rfm_df['customer_ranking'].dropna().unique().tolist()),
-            "state": ["All"] + sorted(rfm_df['state'].dropna().unique().tolist())
+            "salesperson": ["All"] + sorted(rfm_df.get('salesperson', pd.Series([])).dropna().unique().tolist()),
+            "segment": ["All"] + sorted(rfm_df['segment'].dropna().unique().tolist())
         }
         
         return filters

@@ -21,16 +21,14 @@ function DashboardPage() {
     }
     return rfmData.filter(customer => {
       // Ensure filters object has the expected properties
-      const customerGroup = filters.customer_group ?? '';
       const customerType = filters.customer_type ?? '';
-      const customerRanking = filters.customer_ranking ?? '';
-      const state = filters.state ?? '';
+      const salesperson = filters.salesperson ?? '';
+      const segment = filters.segment ?? '';
 
       return (
-        (customerGroup === '' || customer.customer_group === customerGroup) &&
         (customerType === '' || customer.customer_type === customerType) &&
-        (customerRanking === '' || customer.customer_ranking === customerRanking) &&
-        (state === '' || customer.state === state)
+        (salesperson === '' || customer.salesperson === salesperson) &&
+        (segment === '' || customer.segment === segment)
       );
     });
   }, [rfmData, filters]);
@@ -125,26 +123,21 @@ function DashboardPage() {
           <h2 className="text-xl font-semibold mb-4 text-neutral-text-primary-light dark:text-neutral-text-primary-dark">
             Filters
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <FilterDropdown 
-              label="Customer Group" 
-              name="customer_group" 
-              options={filterOptions.customer_group || []} 
-            />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <FilterDropdown 
               label="Customer Type" 
               name="customer_type" 
               options={filterOptions.customer_type || []} 
             />
             <FilterDropdown 
-              label="Customer Ranking" 
-              name="customer_ranking" 
-              options={filterOptions.customer_ranking || []} 
+              label="Salesperson" 
+              name="salesperson" 
+              options={filterOptions.salesperson || []} 
             />
             <FilterDropdown 
-              label="State" 
-              name="state" 
-              options={filterOptions.state || []} 
+              label="Segment" 
+              name="segment" 
+              options={filterOptions.segment || []} 
             />
           </div>
         </div>
