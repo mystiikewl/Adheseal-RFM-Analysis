@@ -1,8 +1,8 @@
 # Project Progress: RFM Analysis Dashboard
 
-## Current Status: Backend Complete, Ready for Frontend Development
+## Current Status: Backend Complete with Connectivity Resolved, Focused on Frontend Development
 
-The backend for the RFM Analysis Dashboard is fully complete with all critical functionalities implemented and tested. Dynamic filter options and refined RFM metrics are now in place, and all unit and integration tests are passing. The project is now ready to transition to frontend development for user interface implementation.
+The backend for the RFM Analysis Dashboard is fully complete with all critical functionalities implemented and tested. Dynamic filter options and refined RFM metrics are in place, and all unit and integration tests are passing. Recent updates have resolved connectivity issues by updating CORS configuration to allow network access and creating a script to run both backend and frontend servers simultaneously. The project is now focused on frontend development for user interface implementation.
 
 ## What Works
 
@@ -30,22 +30,23 @@ The backend for the RFM Analysis Dashboard is fully complete with all critical f
 ## What's Left to Build / Next Steps
 
 - **Frontend Development:**
-  - Design and implement the user interface for displaying RFM data, segments, and filters.
-  - Integrate the frontend with the backend API to fetch and display data dynamically.
+  - Continue designing and implementing the user interface for displaying RFM data, segments, and filters.
+  - Ensure seamless integration with the backend API to fetch and display data dynamically.
 - **Filter Functionality:**
   - Develop backend logic to apply user-selected filters from the frontend to dynamically adjust the RFM data returned by the API.
 - **Deployment Strategy:**
-  - Plan and document the deployment process for the backend and frontend components.
+  - Plan and document the deployment process for the backend and frontend components, considering network access configurations.
 - **Documentation:**
   - Finalize API documentation.
   - Create user documentation if required.
 - **User Feedback:**
-  - Gather user feedback on the RFM metrics, segmentation, and overall dashboard functionality to ensure alignment with business objectives.
+  - Gather user feedback on the RFM metrics, segmentation, dashboard usability, and connectivity to ensure alignment with business objectives.
 
 ## Known Issues / Considerations
 
 - **Static Filter Application:** The `/api/filters` endpoint returns dynamic filter options, but the backend logic to apply these filters to the RFM data based on user selections is not yet implemented. This will be addressed in the next phase alongside frontend integration.
 - **Data Pathing for Deployment:** Currently, data paths in `rfm_service.py` use a hardcoded absolute path for `BASE_DIR`. This may need to be revisited for portability/deployment using environment variables or configuration files.
+- **CORS Security for Production:** The current CORS configuration allows requests from any origin (`allow_origins=["*"]`) to enable network access. This should be restricted to specific origins in a production environment to enhance security.
 
 ## Evolution of Project Decisions
 

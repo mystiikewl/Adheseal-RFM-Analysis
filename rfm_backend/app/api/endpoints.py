@@ -66,4 +66,3 @@ async def get_filters():
         print(f"Error in /filters endpoint: {e}")
         print(traceback.format_exc())
         raise HTTPException(status_code=500, detail=f"Error retrieving filter options: {str(e)}")
->>>>>>> REPLACE

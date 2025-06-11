@@ -65,7 +65,6 @@ def preprocess_data(customer_df, sales_df):
         sales_df['postcode'] = sales_df['postcode'].replace(0, "INVALID").astype(str)
         logger.info(f"Flagged {invalid_customer_postcodes} invalid postcodes in customer data.")
         logger.info(f"Flagged {invalid_sales_postcodes} invalid postcodes in sales data.")
->>>>>>> REPLACE
 
         # 3. Handle Missing Values (log only, no imputation for non-critical fields)
         missing_branch = sales_df['branch'].isnull().sum()
@@ -107,7 +106,6 @@ def calculate_rfm_scores(customer_df, sales_df):
             'transaction_number': 'count',                      # Frequency: count of transactions
             'amount': 'sum'                                     # Monetary: total spend
         }).reset_index()
->>>>>>> REPLACE
 
         # Rename columns for clarity
         rfm_data.columns = ['customer_code', 'recency', 'frequency', 'monetary']
@@ -126,7 +124,6 @@ def calculate_rfm_scores(customer_df, sales_df):
                 rfm_data['recency_score'] = pd.qcut(rfm_data['recency'], unique_values, labels=labels, duplicates='drop')
             else:
                 rfm_data['recency_score'] = pd.qcut(rfm_data['recency'], 5, labels=[1, 2, 3, 4, 5], duplicates='drop')
->>>>>>> REPLACE
                 
         try:
             _, freq_bins = pd.qcut(rfm_data['frequency'], 5, labels=[1, 2, 3, 4, 5], duplicates='drop', retbins=True)
@@ -153,7 +150,6 @@ def calculate_rfm_scores(customer_df, sales_df):
                 rfm_data['monetary_score'] = pd.qcut(rfm_data['monetary'], unique_values, labels=labels, duplicates='drop')
             else:
                 rfm_data['monetary_score'] = pd.qcut(rfm_data['monetary'], 5, labels=[1, 2, 3, 4, 5], duplicates='drop')
->>>>>>> REPLACE
 
         # Handle any NaN values in scores (if quintiles couldn't be calculated due to data distribution)
         rfm_data['recency_score'] = rfm_data['recency_score'].fillna(3).astype(int)
@@ -180,7 +176,6 @@ def calculate_rfm_scores(customer_df, sales_df):
         
         rfm_data['segment'] = rfm_data.apply(assign_segment, axis=1)
         logger.info("Assigned customer segments based on RFM scores.")
->>>>>>> REPLACE
 
         # Merge with customer data to include additional attributes if needed
         rfm_data = rfm_data.merge(customer_df, on='customer_code', how='left')
