@@ -43,47 +43,16 @@ function DataTable({ data }) {
     )
   )
 
-  // Function to export data to CSV
-  const exportToCsv = () => {
-    const headers = [
-      'customer_id', 'customer_name', 'customer_group', 'customer_type', 
-      'customer_ranking', 'state', 'recency', 'frequency', 'monetary', 
-      'rfm_score', 'segment'
-    ]
-    const csvRows = [
-      headers.join(','),
-      ...data.map(row => 
-        headers.map(header => {
-          let value = row[header] || ''
-          // Escape commas and quotes in the value
-          value = value.toString().replace(/"/g, '""')
-          return `"${value}"`
-        }).join(',')
-      )
-    ]
-    const csvContent = csvRows.join('\n')
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.setAttribute('href', url)
-    link.setAttribute('download', 'rfm_data_export.csv')
-    link.style.visibility = 'hidden'
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
-
   // Define columns for the table
   const columns = [
-    { key: 'customer_id', label: 'Customer ID' },
     { key: 'customer_name', label: 'Name' },
-    { key: 'customer_group', label: 'Group' },
     { key: 'customer_type', label: 'Type' },
     { key: 'customer_ranking', label: 'Ranking' },
-    { key: 'state', label: 'State' },
     { key: 'recency', label: 'Recency' },
     { key: 'frequency', label: 'Frequency' },
     { key: 'monetary', label: 'Monetary' },
+    { key: 'avg_transaction_spend', label: 'Avg Spend' },
+    { key: 'last_sale_date', label: 'Last Sale' },
     { key: 'rfm_score', label: 'RFM Score' },
     { key: 'segment', label: 'Segment' }
   ]
@@ -132,16 +101,6 @@ function DataTable({ data }) {
                 </svg>
               </div>
             </div>
-            <button
-              onClick={exportToCsv}
-              className="bg-primary-light hover:bg-primary-hover-light dark:bg-primary-dark dark:hover:bg-primary-hover-dark text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:ring-offset-2 focus:ring-offset-neutral-card-background-light dark:focus:ring-offset-neutral-card-background-dark flex items-center gap-2"
-              aria-label="Export customer data to CSV"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Export CSV
-            </button>
           </div>
         </div>
       </div>
@@ -196,7 +155,7 @@ function DataTable({ data }) {
                         <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${getSegmentStyling(row[column.key])}`}>
                           {row[column.key] || '-'}
                         </span>
-                      ) : column.key === 'monetary' ? (
+                      ) : column.key === 'monetary' || column.key === 'avg_transaction_spend' ? (
                         <span className="text-neutral-text-primary-light dark:text-neutral-text-primary-dark font-medium">
                           {row[column.key] ? `$${parseFloat(row[column.key]).toLocaleString()}` : '-'}
                         </span>

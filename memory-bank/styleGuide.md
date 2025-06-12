@@ -53,6 +53,17 @@ The color palette is designed to support both light and dark themes, with red ac
   - Success: `#66BB6A` (feedback-success-dark)
   - Warning: `#FFA726` (feedback-warning-dark)
 
+### RFM Segment Color Palette (Hot-to-Cold)
+
+This palette is used for visualizing RFM segments, with colors ranging from green (highest value) to red (lowest value).
+
+- **VIP Customers**: `#22c55e` (Green) - High-value, loyal customers
+- **Customers with Potential**: `#84cc16` (Light Green) - Customers with good potential for growth
+- **At Risk**: `#f59e0b` (Yellow) - Customers showing signs of churn
+- **Hibernating**: `#ef4444` (Orange) - Customers who have not purchased recently
+- **Other**: `#dc2626` (Red) - Lowest engagement or unclassified customers
+- **Neutral/Unknown**: `#9ca3af` (Gray) - For segments not explicitly defined or unknown
+
 ### Contrast Guidance
 
 - All text meets WCAG AA contrast ratios against backgrounds.

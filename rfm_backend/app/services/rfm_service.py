@@ -16,9 +16,12 @@ logger = logging.getLogger(__name__)
 
 # File paths for data sources
 import os
-BASE_DIR = "c:/Users/User/Documents/Projects/Adheseal RFM Analysis"
-CUSTOMER_DATA_PATH = os.path.join(BASE_DIR, "data", "customer_data.csv")
-SALES_DATA_PATH = os.path.join(BASE_DIR, "data", "sales_data.csv")
+from pathlib import Path
+
+# Get the project root directory (go up from rfm_backend/app/services/ to project root)
+BASE_DIR = Path(__file__).parent.parent.parent.parent
+CUSTOMER_DATA_PATH = BASE_DIR / "data" / "customer_data.csv"
+SALES_DATA_PATH = BASE_DIR / "data" / "sales_data.csv"
 
 def load_data():
     """
@@ -102,14 +105,22 @@ def calculate_rfm_scores(customer_df, sales_df):
 
         # Group sales data by customer_code to calculate RFM metrics
         rfm_data = sales_df.groupby('customer_code').agg({
-            'date': lambda x: (x.max() - reference_date).days,  # Recency: days from earliest date to last purchase
+            'date': [lambda x: (x.max() - reference_date).days, lambda x: x.max()],  # Recency: days from earliest date to last purchase, Last Sale Date
             'transaction_number': 'count',                      # Frequency: count of transactions
             'amount': 'sum'                                     # Monetary: total spend
         }).reset_index()
 
-        # Rename columns for clarity
-        rfm_data.columns = ['customer_code', 'recency', 'frequency', 'monetary']
+        # Flatten multi-level column index and rename columns for clarity
+        rfm_data.columns = ['customer_code', 'recency', 'last_sale_date', 'frequency', 'monetary']
         logger.info(f"Calculated raw RFM metrics for {rfm_data.shape[0]} customers.")
+
+        # Calculate Customer average transaction spend
+        rfm_data['avg_transaction_spend'] = rfm_data['monetary'] / rfm_data['frequency']
+        logger.info("Calculated average transaction spend for customers.")
+
+        # Format last_sale_date to DD-MM-YY
+        rfm_data['last_sale_date'] = rfm_data['last_sale_date'].dt.strftime('%d-%m-%y')
+        logger.info("Formatted last sale date to DD-MM-YY.")
 
         # Assign RFM scores based on quintiles (1 to 5, where 5 is best for all metrics)
         try:
@@ -177,9 +188,10 @@ def calculate_rfm_scores(customer_df, sales_df):
         rfm_data['segment'] = rfm_data.apply(assign_segment, axis=1)
         logger.info("Assigned customer segments based on RFM scores.")
 
-        # Merge with customer data to include additional attributes if needed
-        rfm_data = rfm_data.merge(customer_df, on='customer_code', how='left')
-        logger.info(f"Merged RFM data with customer attributes, final shape: {rfm_data.shape}")
+        # Merge with customer data to include additional attributes if needed, selecting only required fields
+        selected_columns = ['customer_code', 'customer_name', 'customer_type', 'customer_ranking', 'salesperson']
+        rfm_data = rfm_data.merge(customer_df[selected_columns], on='customer_code', how='left')
+        logger.info(f"Merged RFM data with selected customer attributes, final shape: {rfm_data.shape}")
 
         return rfm_data
     except Exception as e:
