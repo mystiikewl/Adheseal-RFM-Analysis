@@ -37,17 +37,73 @@ This document outlines the reusable UI components used in the Adheseal RFM Analy
 
 ### DataTable
 
-- **Purpose**: Displays a sortable, searchable table of customer data with export functionality for CSV.
+- **Purpose**: Professional-grade data table for displaying RFM customer data with enterprise-level functionality including sorting, filtering, column management, and horizontal navigation.
 - **Props**:
   - `data`: An array of customer data objects to display in the table
+- **Core Features**:
+
+  - **Dual Horizontal Scrollbars**: Top and bottom horizontal scrollbars for intuitive navigation of wide tables
+  - **Enhanced Sorting**: Robust type-aware sorting supporting numbers, dates, strings, and null values with clear visual indicators
+  - **Column Visibility Management**: Show/hide individual columns with persistent preferences and bulk controls
+  - **Drag & Drop Reordering**: Column reordering with localStorage persistence
+  - **Sticky Header**: Table header remains visible during scrolling
+  - **Global Search**: Real-time search across all customer data
+  - **Comprehensive Segment Styling**: Visual coding for all 15 RFM segments with logical color hierarchy
+
+- **Advanced UI Components**:
+
+  - **Column Controls Dropdown**: Accessible dropdown with individual checkboxes for each column, "Show All" and "Hide All" bulk actions
+  - **Enhanced Recency Display**: User-friendly formatting with visual category indicators (Recent, Active, Moderate, Distant, Inactive)
+  - **Trend Sparklines**: Interactive 12-month purchase trend visualization with directional indicators
+  - **Segment Color Coding**: Logical color progression from green (highest value) to red (highest risk) with accessibility-compliant contrast
+
+- **Styling Architecture**:
+
+  - **Container**: `bg-neutral-card-background-light dark:bg-neutral-card-background-dark shadow-lg rounded-lg border border-neutral-border-light dark:border-neutral-border-dark overflow-hidden`
+  - **Header Section**: `p-6 border-b border-neutral-border-light dark:border-neutral-border-dark` with status information and controls
+  - **Top Scrollbar**: `overflow-x-auto bg-neutral-background-light dark:bg-neutral-background-dark border-b border-neutral-border-light dark:border-neutral-border-dark`
+  - **Table Container**: `relative h-[calc(100vh-6rem)]` with `overflow-auto` for dual-directional scrolling
+  - **Sticky Header**: `bg-white dark:bg-gray-800 sticky top-0 z-10 shadow-md border-b-2 border-neutral-border-light dark:border-neutral-border-dark`
+  - **Column Controls**: Dropdown with theme-aware styling and proper z-index management
+  - **Sort Indicators**: Enhanced visual feedback with both ascending and descending arrows using red accent colors
+
+- **Accessibility Excellence**:
+
+  - **WCAG AA Compliance**: All color combinations meet contrast ratio requirements
+  - **Keyboard Navigation**: Full keyboard support including drag-and-drop operations
+  - **Screen Reader Support**: Proper ARIA labels, semantic HTML structure, and focus management
+  - **Progressive Enhancement**: Core functionality works with basic interactions, enhanced with advanced features
+  - **Focus Management**: Clear focus states with red accent rings for all interactive elements
+
+- **Performance Optimizations**:
+
+  - **Efficient Rendering**: Proper React key usage and component isolation
+  - **Smart Re-renders**: Strategic use of useMemo for expensive operations
+  - **LocalStorage Integration**: Persistent user preferences without performance impact
+  - **Dynamic Width Calculation**: Responsive table sizing based on visible columns
+
+- **State Management Patterns**:
+  - **Local State**: Component-specific UI state (dropdown visibility, drag states)
+  - **Persistent State**: Column order and visibility preferences in localStorage
+  - **Shared State**: Integration with Zustand store for global data and filters
+  - **Event Handling**: Proper event propagation for complex interactions
+
+### TrendSparkline
+
+- **Purpose**: Displays mini charts showing customer purchase trends over time with directional indicators.
+- **Props**:
+  - `data`: Array of trend values (e.g., monthly spend over 12 months)
+  - `direction`: Trend direction ('up', 'down', or 'stable')
+  - `width`: Width of the sparkline (default: 80px)
+  - `height`: Height of the sparkline (default: 20px)
+  - `className`: Additional CSS classes
 - **Styling**:
-  - Container: `bg-neutral-card-background-light dark:bg-neutral-card-background-dark shadow-md rounded-lg p-4 mt-6`
-  - Header: `bg-neutral-background-light dark:bg-neutral-background-dark`
-  - Table Cells: `text-neutral-text-secondary-light dark:text-neutral-text-secondary-dark`
-  - Search Input: `border border-neutral-border-light dark:border-neutral-border-dark rounded p-2 w-full md:w-48 focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:outline-none bg-neutral-background-light dark:bg-neutral-background-dark text-neutral-text-primary-light dark:text-neutral-text-primary-dark`
-  - Export Button: `bg-primary-light dark:bg-primary-dark hover:bg-primary-hover-light dark:hover:bg-primary-hover-dark text-neutral-text-primary-light dark:text-neutral-text-primary-dark font-semibold p-2 rounded focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:outline-none`
-  - Hover States: Rows and interactive elements use `hover:bg-neutral-background-dark dark:hover:bg-neutral-background-light` for visual feedback.
-- **Accessibility**: Table headers are clickable for sorting with visual indicators (arrows); search input and export button have clear focus states with red accents.
+  - Uses SVG for crisp rendering at any scale
+  - Color coding: Green for upward trends (#22c55e), Red for downward trends (#ef4444), Gray for stable (#6b7280)
+  - Subtle fill area under curve for visual impact
+  - End point indicator dot for current status
+  - Directional arrow icons with theme-aware colors
+- **Accessibility**: Includes tooltip with trend direction; color coding supplemented with directional arrows for accessibility.
 
 ## Emphasis Patterns
 

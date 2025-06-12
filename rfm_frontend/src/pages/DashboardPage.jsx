@@ -280,6 +280,11 @@ function DashboardPage() {
                 <button
                   onClick={() => exportToCsv(filteredRfmData)}
                   className="w-full sm:w-auto bg-primary-light hover:bg-primary-hover-light dark:bg-primary-dark dark:hover:bg-primary-hover-dark text-white font-medium px-6 py-2.5 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:ring-offset-2 focus:ring-offset-neutral-background-light dark:focus:ring-offset-neutral-background-dark flex items-center justify-center gap-2 text-sm"
+                  style={{ 
+                    backgroundColor: theme === 'dark' ? '#EF5350' : '#D32F2F',
+                    border: '2px solid #fff',
+                    minHeight: '44px'
+                  }}
                   aria-label="Export filtered customer data to CSV"
                   disabled={filteredRfmData.length === 0} // Disable button if no data
                 >
