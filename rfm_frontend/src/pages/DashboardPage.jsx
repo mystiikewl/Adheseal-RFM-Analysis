@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useRfmStore } from '../store/rfmStore'
 import { fetchRfmData, fetchFilterOptions } from '../services/api'
 import KpiCard from '../components/KpiCard'
@@ -8,9 +8,11 @@ import SegmentBarChart from '../components/SegmentBarChart'
 import SegmentTreemap from '../components/SegmentTreemap'
 import MonetaryBarChart from '../components/MonetaryBarChart'
 import RfmHeatmap from '../components/RfmHeatmap'
+import RfmGuideModal from '../components/RfmGuideModal'
 
 function DashboardPage() {
   const { rfmData, isLoading, error, filterOptions, filters, theme, toggleTheme } = useRfmStore()
+  const [showGuideModal, setShowGuideModal] = useState(false)
 
   useEffect(() => {
     fetchRfmData()
@@ -194,12 +196,23 @@ function DashboardPage() {
           <h1 className="text-2xl font-bold text-neutral-text-primary-light dark:text-neutral-text-primary-dark">
             RFM Analysis Dashboard
           </h1>
-          <button 
-            onClick={toggleTheme} 
-            className="bg-primary-light hover:bg-primary-hover-light dark:bg-primary-dark dark:hover:bg-primary-hover-dark text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:ring-offset-2 focus:ring-offset-neutral-background-light dark:focus:ring-offset-neutral-background-dark"
-          >
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowGuideModal(true)}
+              className="bg-neutral-card-background-light dark:bg-neutral-card-background-dark hover:bg-neutral-background-light dark:hover:bg-neutral-background-dark text-neutral-text-primary-light dark:text-neutral-text-primary-dark px-4 py-2 rounded-lg transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:ring-offset-2 focus:ring-offset-neutral-background-light dark:focus:ring-offset-neutral-background-dark border border-neutral-border-light dark:border-neutral-border-dark flex items-center gap-2"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              RFM Guide
+            </button>
+            <button 
+              onClick={toggleTheme} 
+              className="bg-primary-light hover:bg-primary-hover-light dark:bg-primary-dark dark:hover:bg-primary-hover-dark text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium focus:outline-none focus:ring-2 focus:ring-primary-light dark:focus:ring-primary-dark focus:ring-offset-2 focus:ring-offset-neutral-background-light dark:focus:ring-offset-neutral-background-dark"
+            >
             {theme === 'light' ? '🌙 Dark Mode' : '☀️ Light Mode'}
           </button>
+          </div>
         </div>
         
         {/* KPI Cards Section */}
@@ -298,6 +311,12 @@ function DashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* RFM Guide Modal */}
+      <RfmGuideModal 
+        isOpen={showGuideModal} 
+        onClose={() => setShowGuideModal(false)} 
+      />
     </div>
   )
 }

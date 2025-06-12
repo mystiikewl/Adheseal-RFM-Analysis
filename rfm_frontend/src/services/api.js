@@ -39,3 +39,14 @@ export const fetchFilterOptions = async () => {
     store.setLoading(false)
   }
 }
+
+// Standalone API functions for non-store operations
+export const api = {
+  getRfmGuide: async () => {
+    const response = await fetch(`${API_URL}/rfm-guide`)
+    if (!response.ok) {
+      throw new Error('Failed to fetch RFM guide')
+    }
+    return response.json()
+  }
+}
